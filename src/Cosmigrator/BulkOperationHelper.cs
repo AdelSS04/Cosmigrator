@@ -1,4 +1,5 @@
 using System.Net;
+using System.Text.Json;
 using System.Text.Json.Nodes;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Extensions.Logging;
@@ -117,6 +118,10 @@ public class BulkOperationHelper
     {
         return new CosmosClient(connectionString, new CosmosClientOptions
         {
+            UseSystemTextJsonSerializerWithOptions = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            },
             AllowBulkExecution = true,
             MaxRetryAttemptsOnRateLimitedRequests = 10,
             MaxRetryWaitTimeOnRateLimitedRequests = TimeSpan.FromSeconds(60)

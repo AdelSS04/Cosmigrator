@@ -1,18 +1,15 @@
-<div align="center">
-
 # Cosmigrator
 
 **A powerful, flexible migration framework for Azure Cosmos DB**
 
 [![Build Status](https://github.com/AdelSS04/Cosmigrator/workflows/CI%2FCD/badge.svg)](https://github.com/AdelSS04/Cosmigrator/actions)
-[![NuGet](https://img.shields.io/nuget/v/Cosmigrator.svg)](https://www.nuget.org/packages/Cosmigrator/)
+[![NuGet](https://img.shields.io/nuget/v/Cosmigrator.svg?label=NuGet)](https://www.nuget.org/packages/Cosmigrator/)
+[![NuGet Downloads](https://img.shields.io/nuget/dt/Cosmigrator.svg?label=Downloads)](https://www.nuget.org/packages/Cosmigrator/)
 [![codecov](https://codecov.io/gh/AdelSS04/Cosmigrator/branch/main/graph/badge.svg)](https://codecov.io/gh/AdelSS04/Cosmigrator)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![.NET Version](https://img.shields.io/badge/.NET-8.0-512BD4)](https://dotnet.microsoft.com/download)
 
-[Features](#-features) • [Quick Start](#-quick-start) • [Documentation](#-documentation) • [Contributing](#-contributing) • [License](#-license)
-
-</div>
+**[Features](#-features) • [Quick Start](#-quick-start) • [Documentation](#-documentation) • [Contributing](#-contributing) • [License](#-license)**
 
 ---
 
@@ -51,38 +48,38 @@ dotnet add package Cosmigrator
 
 ## Architecture
 
-```
-Cosmigrator.slnx
-├── src/
-│   └── Cosmigrator/                ← Core library (NuGet package)
-│       ├── IMigration.cs               ← Migration contract
-│       ├── MigrationHost.cs            ← Static entry point (handles all infrastructure)
-│       ├── MigrationRunner.cs          ← Orchestrator: run, rollback, status
-│       ├── MigrationHistory.cs         ← __MigrationHistory container manager
-│       ├── MigrationDiscovery.cs       ← Reflection-based migration scanner
-│       ├── BulkOperationHelper.cs      ← Bulk upsert with retry logic
-│       └── Models/
-│           └── MigrationRecord.cs      ← History record model
-│
-├── samples/
-│   └── Cosmigrator.Sample/            ← Example migration console app
-│       ├── Program.cs                  ← Entry point → calls MigrationHost.RunAsync()
-│       ├── appsettings.json            ← Cosmos DB + Serilog config
-│       └── Migrations/
-│           ├── 20240101_000001_AddAgePropertyToUsers.cs
-│           ├── 20240101_000002_RemoveMiddleNameProperty.cs
-│           ├── 20240101_000003_RenameUserNameToDisplayName.cs
-│           ├── 20240101_000004_AddUniqueKeyPolicyToOrders.cs
-│           └── 20240101_000005_AddCompositeIndexToUsers.cs
-│
-├── tests/
-│   └── Cosmigrator.Tests/             ← Unit tests (xUnit + FluentAssertions)
-│
-└── YourService.DbInit/                ← (Your own project, same pattern)
-    ├── Program.cs
-    ├── appsettings.json
-    └── Migrations/
-        └── ...
+```text
+Your Solution
++-- src/
+|   +-- Cosmigrator/                  (Core NuGet package)
+|       +-- IMigration.cs             (Migration contract)
+|       +-- MigrationHost.cs          (Entry point - handles all infrastructure)
+|       +-- MigrationRunner.cs        (Orchestrator: run, rollback, status)
+|       +-- MigrationHistory.cs       (__MigrationHistory container manager)
+|       +-- MigrationDiscovery.cs     (Reflection-based migration scanner)
+|       +-- BulkOperationHelper.cs    (Bulk operations with retry logic)
+|       +-- Models/
+|           +-- MigrationRecord.cs    (History record model)
+|
++-- samples/
+|   +-- Cosmigrator.Sample/           (Example migration console app)
+|       +-- Program.cs                (Calls MigrationHost.RunAsync())
+|       +-- appsettings.json          (Cosmos DB + Serilog config)
+|       +-- Migrations/
+|           +-- 20240101_000001_AddAgePropertyToUsers.cs
+|           +-- 20240101_000002_RemoveMiddleNameProperty.cs
+|           +-- 20240101_000003_RenameUserNameToDisplayName.cs
+|           +-- 20240101_000004_AddUniqueKeyPolicyToOrders.cs
+|           +-- 20240101_000005_AddCompositeIndexToUsers.cs
+|
++-- tests/
+|   +-- Cosmigrator.Tests/            (Unit tests with xUnit + FluentAssertions)
+|
++-- YourService.DbInit/               (Your own project - same pattern)
+    +-- Program.cs
+    +-- appsettings.json
+    +-- Migrations/
+        +-- ...
 ```
 
 ### Design Principles
@@ -284,12 +281,12 @@ Run with **no arguments** to auto-apply pending migrations. Ideal for:
 
 ### Architecture
 
-```
-Cosmigrator.slnx
-├── src/Cosmigrator/                # Core library (NuGet package)
-├── samples/Cosmigrator.Sample/     # Example project
-├── tests/Cosmigrator.Tests/        # Unit tests
-└── .github/                        # CI/CD workflows
+```text
+Cosmigrator Repository
++-- src/Cosmigrator/              (Core library - NuGet package)
++-- samples/Cosmigrator.Sample/   (Example project)
++-- tests/Cosmigrator.Tests/      (Unit tests)
++-- .github/                      (CI/CD workflows)
 ```
 
 ### Design Principles
@@ -424,10 +421,6 @@ If you find Cosmigrator useful, please consider giving it a star ⭐️
 
 ---
 
-<div align="center">
-
 **Made with ❤️ for the Azure Cosmos DB community**
 
 [⬆ Back to Top](#cosmigrator)
-
-</div>
