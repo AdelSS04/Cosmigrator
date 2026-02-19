@@ -8,24 +8,18 @@ namespace Cosmigrator;
 /// Manages the "__MigrationHistory" container in Cosmos DB.
 /// Tracks which migrations have been applied, rolled back, or are pending.
 /// </summary>
-public class MigrationHistory
+/// <remarks>
+/// Initializes a new instance of <see cref="MigrationHistory"/>.
+/// </remarks>
+/// <param name="database">The Cosmos DB database instance.</param>
+/// <param name="logger">The logger instance.</param>
+public class MigrationHistory(Database database, ILogger<MigrationHistory> logger)
 {
     private const string ContainerName = "__MigrationHistory";
 
-    private readonly Database _database;
-    private readonly ILogger<MigrationHistory> _logger;
+    private readonly Database _database = database;
+    private readonly ILogger<MigrationHistory> _logger = logger;
     private Container? _container;
-
-    /// <summary>
-    /// Initializes a new instance of <see cref="MigrationHistory"/>.
-    /// </summary>
-    /// <param name="database">The Cosmos DB database instance.</param>
-    /// <param name="logger">The logger instance.</param>
-    public MigrationHistory(Database database, ILogger<MigrationHistory> logger)
-    {
-        _database = database;
-        _logger = logger;
-    }
 
     /// <summary>
     /// Initializes the reference to the __MigrationHistory container.
@@ -64,10 +58,9 @@ public class MigrationHistory
     public async Task<List<MigrationRecord>> GetAppliedMigrationsAsync()
     {
         var allRecords = await GetAllRecordsAsync();
-        return allRecords
+        return [.. allRecords
             .Where(r => r.Status == MigrationStatus.Applied)
-            .OrderBy(r => r.Id)
-            .ToList();
+            .OrderBy(r => r.Id)];
     }
 
     /// <summary>

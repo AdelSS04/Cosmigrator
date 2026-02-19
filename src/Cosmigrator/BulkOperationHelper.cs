@@ -11,27 +11,19 @@ namespace Cosmigrator;
 /// Uses <c>AllowBulkExecution = true</c> for optimal throughput and includes
 /// automatic retry with exponential backoff for 429 (TooManyRequests) responses.
 /// </summary>
-public class BulkOperationHelper
+/// <remarks>
+/// Initializes a new instance of <see cref="BulkOperationHelper"/>.
+/// </remarks>
+/// <param name="logger">The logger instance.</param>
+/// <param name="batchSize">Number of documents to process per batch (default: 100).</param>
+/// <param name="maxRetries">Maximum retry attempts for throttled requests (default: 5).</param>
+/// <param name="baseDelay">Base delay for exponential backoff (default: 1 second).</param>
+public class BulkOperationHelper(ILogger<BulkOperationHelper> logger, int batchSize = 100, int maxRetries = 5, TimeSpan? baseDelay = null)
 {
-    private readonly int _batchSize;
-    private readonly int _maxRetries;
-    private readonly TimeSpan _baseDelay;
-    private readonly ILogger<BulkOperationHelper> _logger;
-
-    /// <summary>
-    /// Initializes a new instance of <see cref="BulkOperationHelper"/>.
-    /// </summary>
-    /// <param name="logger">The logger instance.</param>
-    /// <param name="batchSize">Number of documents to process per batch (default: 100).</param>
-    /// <param name="maxRetries">Maximum retry attempts for throttled requests (default: 5).</param>
-    /// <param name="baseDelay">Base delay for exponential backoff (default: 1 second).</param>
-    public BulkOperationHelper(ILogger<BulkOperationHelper> logger, int batchSize = 100, int maxRetries = 5, TimeSpan? baseDelay = null)
-    {
-        _logger = logger;
-        _batchSize = batchSize;
-        _maxRetries = maxRetries;
-        _baseDelay = baseDelay ?? TimeSpan.FromSeconds(1);
-    }
+    private readonly int _batchSize = batchSize;
+    private readonly int _maxRetries = maxRetries;
+    private readonly TimeSpan _baseDelay = baseDelay ?? TimeSpan.FromSeconds(1);
+    private readonly ILogger<BulkOperationHelper> _logger = logger;
 
     /// <summary>
     /// Reads all documents from a container using a FeedIterator.
