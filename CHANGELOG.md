@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.3] - 2026-02-19
+
 ### Added
 - Multi-target framework support for .NET 8, .NET 9, and .NET 10
 - Central Package Management via `Directory.Packages.props`
@@ -29,5 +31,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Initial public release.
 
-[Unreleased]: https://github.com/AdelSS04/Cosmigrator/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/AdelSS04/Cosmigrator/compare/v1.0.3...HEAD
+[1.0.3]: https://github.com/AdelSS04/Cosmigrator/compare/v1.0.0...v1.0.3
 [1.0.0]: https://github.com/AdelSS04/Cosmigrator/releases/tag/v1.0.0
