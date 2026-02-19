@@ -48,7 +48,7 @@ jobs:
 
     - name: Pack NuGet packages
       if: github.event_name == 'release'
-      run: dotnet pack src/Cosmigrator/Cosmigrator.csproj --configuration Release --output ./artifacts
+      run: dotnet pack src/Cosmigrator/Cosmigrator.csproj --no-build --configuration Release --output ./artifacts
 
     - name: Upload artifacts
       if: github.event_name == 'release'
