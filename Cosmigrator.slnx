@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Cosmigrator/Cosmigrator.csproj" />
+  </Folder>
+  <Folder Name="/samples/">
+    <Project Path="samples/Cosmigrator.Sample/Cosmigrator.Sample.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Cosmigrator.Tests/Cosmigrator.Tests.csproj" />
+  </Folder>
+</Solution>

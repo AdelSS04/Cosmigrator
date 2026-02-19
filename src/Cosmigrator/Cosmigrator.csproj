@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Cosmigrator</RootNamespace>
+    <AzureCosmosDisableNewtonsoftJsonCheck>true</AzureCosmosDisableNewtonsoftJsonCheck>
+
+    <!-- NuGet Package Metadata -->
+    <PackageId>Cosmigrator</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>Cosmigrator Contributors</Authors>
+    <Company>Cosmigrator</Company>
+    <Product>Cosmigrator</Product>
+    <Description>A powerful, flexible migration framework for Azure Cosmos DB. Manage document schema changes, index updates, and container modifications with version-controlled, reversible migrations.</Description>
+    <PackageTags>azure;cosmosdb;cosmos;migration;database;schema;nosql;documentdb</PackageTags>
+    <PackageProjectUrl>https://github.com/AdelSS04/Cosmigrator</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/AdelSS04/Cosmigrator</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Copyright>Copyright (c) 2026 Cosmigrator Contributors</Copyright>
+    <PackageReleaseNotes>See CHANGELOG.md for release notes</PackageReleaseNotes>
+
+    <!-- Source Link -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.*" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.*" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.*" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.*" />
+    <PackageReference Include="Serilog.Extensions.Hosting" Version="8.*" />
+    <PackageReference Include="Serilog.Settings.Configuration" Version="8.*" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="6.*" />
+    <PackageReference Include="Serilog.Formatting.Compact" Version="3.*" />
+  </ItemGroup>
+
+</Project>
