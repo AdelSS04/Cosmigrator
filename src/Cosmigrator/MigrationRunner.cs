@@ -43,10 +43,7 @@ public class MigrationRunner
     /// Initializes the migration history container reference. Must be called before
     /// any other operations.
     /// </summary>
-    public async Task InitializeAsync()
-    {
-        await _history.InitializeAsync();
-    }
+    public async Task InitializeAsync() => await _history.InitializeAsync();
 
     /// <summary>
     /// Discovers and runs all pending migrations in chronological order.

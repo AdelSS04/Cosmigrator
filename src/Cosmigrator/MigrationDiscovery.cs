@@ -20,7 +20,7 @@ public static class MigrationDiscovery
 
         var targetAssemblies = assemblies.Length > 0
             ? assemblies
-            : new[] { Assembly.GetEntryAssembly()! };
+            : [Assembly.GetEntryAssembly()!];
 
         var migrations = targetAssemblies
             .SelectMany(a => a.GetTypes())

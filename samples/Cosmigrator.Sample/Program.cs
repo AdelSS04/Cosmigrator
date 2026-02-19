@@ -1,5 +1,4 @@
 using System.Reflection;
-using Cosmigrator;
 
 namespace Cosmigrator.Sample;
 
