@@ -5,7 +5,7 @@
     <RootNamespace>Cosmigrator</RootNamespace>
 
     <PackageId>Cosmigrator</PackageId>
-    <Version>1.0.3</Version>
+    <Version>1.0.4</Version>
     <Authors>Cosmigrator Contributors</Authors>
     <Company>Cosmigrator</Company>
     <Product>Cosmigrator</Product>
@@ -31,6 +31,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Cosmos" />
+    <PackageReference Include="Newtonsoft.Json" />
     <PackageReference Include="Serilog.Extensions.Hosting" />
     <PackageReference Include="Serilog.Settings.Configuration" />
     <PackageReference Include="Serilog.Sinks.Console" />

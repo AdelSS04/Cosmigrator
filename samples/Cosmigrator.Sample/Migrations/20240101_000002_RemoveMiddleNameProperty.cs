@@ -29,26 +29,21 @@ public class _20240101_000002_RemoveMiddleNameProperty : IMigration
 
         logger.LogInformation("Removing 'middleName' property from all Users...");
 
-        var documents = await helper.ReadAllDocumentsAsync(container);
-        var modified = new List<JsonObject>();
+        var documents = await helper.ReadDocumentsAsync(container, "SELECT * FROM c WHERE IS_DEFINED(c.middleName)");
 
-        foreach (var doc in documents)
-        {
-            if (doc["middleName"] != null)
-            {
-                doc.Remove("middleName");
-                modified.Add(doc);
-            }
-        }
-
-        if (modified.Count == 0)
+        if (documents.Count == 0)
         {
             logger.LogInformation("No documents had 'middleName' property");
             return;
         }
 
-        logger.LogInformation("{Count} document(s) to update", modified.Count);
-        await helper.BulkUpsertAsync(container, modified);
+        foreach (var doc in documents)
+        {
+            doc.Remove("middleName");
+        }
+
+        logger.LogInformation("{Count} document(s) to update", documents.Count);
+        await helper.BulkUpsertAsync(container, documents);
     }
 
     /// <inheritdoc />
@@ -60,24 +55,19 @@ public class _20240101_000002_RemoveMiddleNameProperty : IMigration
 
         logger.LogInformation("Re-adding 'middleName' property with empty default...");
 
-        var documents = await helper.ReadAllDocumentsAsync(container);
-        var modified = new List<JsonObject>();
+        var documents = await helper.ReadDocumentsAsync(container, "SELECT * FROM c WHERE NOT IS_DEFINED(c.middleName)");
 
-        foreach (var doc in documents)
-        {
-            if (doc["middleName"] == null)
-            {
-                doc["middleName"] = string.Empty;
-                modified.Add(doc);
-            }
-        }
-
-        if (modified.Count == 0)
+        if (documents.Count == 0)
         {
             logger.LogInformation("No documents needed updating");
             return;
         }
 
-        await helper.BulkUpsertAsync(container, modified);
+        foreach (var doc in documents)
+        {
+            doc["middleName"] = string.Empty;
+        }
+
+        await helper.BulkUpsertAsync(container, documents);
     }
 }
