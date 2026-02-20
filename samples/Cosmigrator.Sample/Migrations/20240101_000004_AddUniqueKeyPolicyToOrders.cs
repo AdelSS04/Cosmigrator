@@ -45,7 +45,16 @@ public class _20240101_000004_AddUniqueKeyPolicyToOrders : IMigration
         var existingPropertiesResponse = await container.ReadContainerAsync();
         var existingProperties = existingPropertiesResponse.Resource;
 
-        // Add the new unique key to existing policy
+        // Add the new unique key to existing policy (only if not already present)
+        var alreadyExists = existingProperties.UniqueKeyPolicy.UniqueKeys
+            .Any(k => k.Paths.Count == 1 && k.Paths[0] == "/orderNumber");
+
+        if (alreadyExists)
+        {
+            logger.LogInformation("Unique key '/orderNumber' already exists on 'Orders'. Skipping migration");
+            return;
+        }
+
         existingProperties.UniqueKeyPolicy.UniqueKeys.Add(new UniqueKey
         {
             Paths = { "/orderNumber" }

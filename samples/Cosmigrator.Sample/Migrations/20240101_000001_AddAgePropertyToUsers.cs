@@ -33,26 +33,21 @@ public class _20240101_000001_AddAgePropertyToUsers : IMigration
 
         logger.LogInformation("Adding 'age' property with default value {DefaultValue} to all Users...", DefaultValue);
 
-        var documents = await helper.ReadAllDocumentsAsync(container);
-        var modified = new List<JsonObject>();
+        var documents = await helper.ReadDocumentsAsync(container, "SELECT * FROM c WHERE NOT IS_DEFINED(c.age)");
 
-        foreach (var doc in documents)
-        {
-            if (doc["age"] == null)
-            {
-                doc["age"] = JsonValue.Create(DefaultValue);
-                modified.Add(doc);
-            }
-        }
-
-        if (modified.Count == 0)
+        if (documents.Count == 0)
         {
             logger.LogInformation("No documents needed updating");
             return;
         }
 
-        logger.LogInformation("{Count} document(s) to update", modified.Count);
-        await helper.BulkUpsertAsync(container, modified);
+        foreach (var doc in documents)
+        {
+            doc["age"] = JsonValue.Create(DefaultValue);
+        }
+
+        logger.LogInformation("{Count} document(s) to update", documents.Count);
+        await helper.BulkUpsertAsync(container, documents);
     }
 
     /// <inheritdoc />
@@ -64,24 +59,19 @@ public class _20240101_000001_AddAgePropertyToUsers : IMigration
 
         logger.LogInformation("Removing 'age' property from all Users...");
 
-        var documents = await helper.ReadAllDocumentsAsync(container);
-        var modified = new List<JsonObject>();
+        var documents = await helper.ReadDocumentsAsync(container, "SELECT * FROM c WHERE IS_DEFINED(c.age)");
 
-        foreach (var doc in documents)
-        {
-            if (doc["age"] != null)
-            {
-                doc.Remove("age");
-                modified.Add(doc);
-            }
-        }
-
-        if (modified.Count == 0)
+        if (documents.Count == 0)
         {
             logger.LogInformation("No documents needed updating");
             return;
         }
 
-        await helper.BulkUpsertAsync(container, modified);
+        foreach (var doc in documents)
+        {
+            doc.Remove("age");
+        }
+
+        await helper.BulkUpsertAsync(container, documents);
     }
 }

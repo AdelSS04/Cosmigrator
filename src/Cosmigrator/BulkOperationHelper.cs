@@ -31,9 +31,20 @@ public class BulkOperationHelper(ILogger<BulkOperationHelper> logger, int batchS
     /// <param name="container">The source container.</param>
     /// <returns>A list of all documents as <see cref="JsonObject"/>.</returns>
     public async Task<List<JsonObject>> ReadAllDocumentsAsync(Container container)
+        => await ReadDocumentsAsync(container, "SELECT * FROM c");
+
+    /// <summary>
+    /// Reads documents from a container using a custom SQL query.
+    /// Use this to filter documents server-side (e.g. with a WHERE clause)
+    /// instead of loading all documents into memory.
+    /// </summary>
+    /// <param name="container">The source container.</param>
+    /// <param name="sql">A Cosmos DB SQL query string (e.g. "SELECT * FROM c WHERE NOT IS_DEFINED(c.age)").</param>
+    /// <returns>A list of matching documents as <see cref="JsonObject"/>.</returns>
+    public async Task<List<JsonObject>> ReadDocumentsAsync(Container container, string sql)
     {
         var documents = new List<JsonObject>();
-        var query = new QueryDefinition("SELECT * FROM c");
+        var query = new QueryDefinition(sql);
 
         using var iterator = container.GetItemQueryIterator<JsonObject>(query);
         while (iterator.HasMoreResults)
@@ -42,7 +53,7 @@ public class BulkOperationHelper(ILogger<BulkOperationHelper> logger, int batchS
             documents.AddRange(response);
         }
 
-        _logger.LogInformation("Read {Count} document(s) from '{ContainerId}'", documents.Count, container.Id);
+        _logger.LogInformation("Read {Count} document(s) from '{ContainerId}' using query: {Query}", documents.Count, container.Id, sql);
         return documents;
     }
 

@@ -31,6 +31,19 @@ public class _20240101_000005_AddCompositeIndexToUsers : IMigration
         var response = await container.ReadContainerAsync();
         var properties = response.Resource;
 
+        // Check if the composite index already exists
+        var alreadyExists = properties.IndexingPolicy.CompositeIndexes
+            .Any(ci =>
+                ci.Count == 2 &&
+                ci.Any(p => p.Path == "/lastName" && p.Order == CompositePathSortOrder.Ascending) &&
+                ci.Any(p => p.Path == "/firstName" && p.Order == CompositePathSortOrder.Ascending));
+
+        if (alreadyExists)
+        {
+            logger.LogInformation("Composite index [/lastName ASC, /firstName ASC] already exists on 'Users'. Skipping migration");
+            return;
+        }
+
         var compositeIndex = new Collection<CompositePath>
         {
             new CompositePath { Path = "/lastName", Order = CompositePathSortOrder.Ascending },

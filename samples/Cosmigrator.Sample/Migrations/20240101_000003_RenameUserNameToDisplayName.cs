@@ -34,27 +34,22 @@ public class _20240101_000003_RenameUserNameToDisplayName : IMigration
         logger.LogInformation("Renaming '{OldProperty}' -> '{NewProperty}' on all Users...",
             OldPropertyName, NewPropertyName);
 
-        var documents = await helper.ReadAllDocumentsAsync(container);
-        var modified = new List<JsonObject>();
+        var documents = await helper.ReadDocumentsAsync(container, $"SELECT * FROM c WHERE IS_DEFINED(c.{OldPropertyName})");
 
-        foreach (var doc in documents)
-        {
-            if (doc[OldPropertyName] != null)
-            {
-                doc[NewPropertyName] = doc[OldPropertyName]!.DeepClone();
-                doc.Remove(OldPropertyName);
-                modified.Add(doc);
-            }
-        }
-
-        if (modified.Count == 0)
+        if (documents.Count == 0)
         {
             logger.LogInformation("No documents had '{OldProperty}' property", OldPropertyName);
             return;
         }
 
-        logger.LogInformation("{Count} document(s) to update", modified.Count);
-        await helper.BulkUpsertAsync(container, modified);
+        foreach (var doc in documents)
+        {
+            doc[NewPropertyName] = doc[OldPropertyName]!.DeepClone();
+            doc.Remove(OldPropertyName);
+        }
+
+        logger.LogInformation("{Count} document(s) to update", documents.Count);
+        await helper.BulkUpsertAsync(container, documents);
     }
 
     /// <inheritdoc />
@@ -67,25 +62,20 @@ public class _20240101_000003_RenameUserNameToDisplayName : IMigration
         logger.LogInformation("Reverting rename: '{NewProperty}' -> '{OldProperty}'...",
             NewPropertyName, OldPropertyName);
 
-        var documents = await helper.ReadAllDocumentsAsync(container);
-        var modified = new List<JsonObject>();
+        var documents = await helper.ReadDocumentsAsync(container, $"SELECT * FROM c WHERE IS_DEFINED(c.{NewPropertyName})");
 
-        foreach (var doc in documents)
-        {
-            if (doc[NewPropertyName] != null)
-            {
-                doc[OldPropertyName] = doc[NewPropertyName]!.DeepClone();
-                doc.Remove(NewPropertyName);
-                modified.Add(doc);
-            }
-        }
-
-        if (modified.Count == 0)
+        if (documents.Count == 0)
         {
             logger.LogInformation("No documents had '{NewProperty}' property", NewPropertyName);
             return;
         }
 
-        await helper.BulkUpsertAsync(container, modified);
+        foreach (var doc in documents)
+        {
+            doc[OldPropertyName] = doc[NewPropertyName]!.DeepClone();
+            doc.Remove(NewPropertyName);
+        }
+
+        await helper.BulkUpsertAsync(container, documents);
     }
 }
