@@ -367,7 +367,6 @@ _site/
 # NPM
 package-lock.json
 !docs/package-lock.json
-!website/package-lock.json
 yarn.lock
 pnpm-lock.yaml
 
