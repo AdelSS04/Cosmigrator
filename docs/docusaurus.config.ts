@@ -11,11 +11,12 @@ const config: Config = {
     v4: true,
   },
 
-  url: 'https://cosmigrator.dev',
-  baseUrl: '/',
+  url: 'https://adelss04.github.io',
+  baseUrl: '/Cosmigrator/',
 
   organizationName: 'AdelSS04',
   projectName: 'Cosmigrator',
+  trailingSlash: false,
 
   onBrokenLinks: 'throw',
 
