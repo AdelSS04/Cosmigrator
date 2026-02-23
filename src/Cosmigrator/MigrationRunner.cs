@@ -47,8 +47,8 @@ public class MigrationRunner
 
     /// <summary>
     /// Discovers and runs all pending migrations in chronological order.
-    /// Exits with code 0 on success, code 1 on failure.
     /// </summary>
+    /// <exception cref="Exception">Thrown when a migration fails to apply.</exception>
     public async Task RunPendingMigrationsAsync()
     {
         _logger.LogInformation("Running pending migrations");
@@ -64,7 +64,6 @@ public class MigrationRunner
         if (pending.Count == 0)
         {
             _logger.LogInformation("No pending migrations found. Database is up to date");
-            Environment.Exit(0);
             return;
         }
 
@@ -87,19 +86,18 @@ public class MigrationRunner
             {
                 _logger.LogError(ex, "Failed: [{Id}] {Name}", migration.Id, migration.Name);
                 _logger.LogError("Migration run aborted. Fix the issue and re-run");
-                Environment.Exit(1);
-                return;
+                throw;
             }
         }
 
         _logger.LogInformation("All {Count} migration(s) applied successfully", pending.Count);
-        Environment.Exit(0);
     }
 
     /// <summary>
     /// Rolls back the last <paramref name="steps"/> applied migrations in reverse order.
     /// </summary>
     /// <param name="steps">Number of migrations to roll back.</param>
+    /// <exception cref="Exception">Thrown when a rollback fails.</exception>
     public async Task RollbackAsync(int steps = 1)
     {
         _logger.LogInformation("Rolling back last {Steps} migration(s)", steps);
@@ -109,7 +107,6 @@ public class MigrationRunner
         if (applied.Count == 0)
         {
             _logger.LogWarning("No applied migrations to roll back");
-            Environment.Exit(0);
             return;
         }
 
@@ -145,13 +142,11 @@ public class MigrationRunner
             {
                 _logger.LogError(ex, "Rollback failed: [{Id}] {Name}", migration.Id, migration.Name);
                 _logger.LogError("Rollback aborted. Fix the issue and re-run");
-                Environment.Exit(1);
-                return;
+                throw;
             }
         }
 
         _logger.LogInformation("Rolled back {Count} migration(s) successfully", toRollback.Count);
-        Environment.Exit(0);
     }
 
     /// <summary>
