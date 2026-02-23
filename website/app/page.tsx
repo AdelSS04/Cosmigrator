@@ -135,7 +135,8 @@ await MigrationHost.RunAsync(args, Assembly.GetExecutingAssembly());
           </h2>
           <p className="text-gray-500 mb-14 max-w-2xl">
             Cosmos DB doesn&apos;t have built-in migrations. Schema changes happen with
-            ad-hoc scripts, manual patching, or hope. Cosmigrator gives you structure.
+            ad-hoc scripts, manual patching, or hope. Cosmigrator gives you structure.{" "}
+            <Link href="https://adelss04.github.io/Cosmigrator/core-concepts/how-it-works" className="text-blue-600 hover:text-blue-700 font-medium inline-flex items-center gap-1">Learn more <ArrowRight className="w-3.5 h-3.5" /></Link>
           </p>
 
           <div className="grid lg:grid-cols-2 gap-6">
@@ -232,7 +233,8 @@ while (query.HasMoreResults)
             What you can do
           </h2>
           <p className="text-gray-500 mb-14 max-w-2xl">
-            Real migration scenarios, not toy examples. Every feature works with the full Cosmos DB SDK.
+            Real migration scenarios, not toy examples. Every feature works with the full Cosmos DB SDK.{" "}
+            <Link href="https://adelss04.github.io/Cosmigrator/migrations/add-property" className="text-blue-600 hover:text-blue-700 font-medium inline-flex items-center gap-1">See migration guides <ArrowRight className="w-3.5 h-3.5" /></Link>
           </p>
 
           <div className="grid lg:grid-cols-[1fr_1.2fr] gap-12 items-start">
@@ -243,40 +245,51 @@ while (query.HasMoreResults)
                   icon: Database,
                   op: "Document transforms",
                   desc: "Add, remove, or rename properties across all documents. Uses SQL filtering to avoid loading unnecessary data.",
+                  docsUrl: "https://adelss04.github.io/Cosmigrator/migrations/add-property",
                 },
                 {
                   icon: Zap,
                   op: "Bulk operations",
                   desc: "Built-in BulkOperationHelper with configurable batch size, automatic 429 retry with exponential backoff.",
+                  docsUrl: "https://adelss04.github.io/Cosmigrator/api-reference/bulk-operation-helper",
                 },
                 {
                   icon: RotateCcw,
                   op: "Rollback support",
                   desc: "Every migration has UpAsync and DownAsync. Roll back the last N migrations from the CLI.",
+                  docsUrl: "https://adelss04.github.io/Cosmigrator/getting-started/cli-commands",
                 },
                 {
                   icon: Layers,
                   op: "Index & container changes",
                   desc: "Modify indexing policies, add composite indexes, or swap containers — all versioned and reversible.",
+                  docsUrl: "https://adelss04.github.io/Cosmigrator/migrations/composite-index",
                 },
                 {
                   icon: Search,
                   op: "Status & discovery",
                   desc: "Check which migrations are applied, pending, or rolled back at any time via the CLI.",
+                  docsUrl: "https://adelss04.github.io/Cosmigrator/api-reference/migration-discovery",
                 },
                 {
                   icon: GitBranch,
                   op: "History tracking",
                   desc: "All applied migrations are recorded with timestamps and status. No migration runs twice.",
+                  docsUrl: "https://adelss04.github.io/Cosmigrator/core-concepts/history-tracking",
                 },
-              ].map(({ icon: Icon, op, desc }) => (
+              ].map(({ icon: Icon, op, desc, docsUrl }) => (
                 <div key={op} className="flex gap-4">
                   <div className="shrink-0 flex h-9 w-9 items-center justify-center rounded-lg bg-blue-50 ring-1 ring-blue-100">
                     <Icon className="w-4 h-4 text-blue-600" />
                   </div>
                   <div>
                     <div className="text-sm font-semibold text-gray-900 mb-1">{op}</div>
-                    <p className="text-sm text-gray-500 leading-relaxed">{desc}</p>
+                    <p className="text-sm text-gray-500 leading-relaxed">
+                      {desc}{" "}
+                      <Link href={docsUrl} target="_blank" className="text-blue-600 hover:text-blue-700 font-medium inline-flex items-center gap-0.5 text-xs">
+                        Docs <ArrowRight className="w-3 h-3" />
+                      </Link>
+                    </p>
                   </div>
                 </div>
               ))}
@@ -344,7 +357,8 @@ while (query.HasMoreResults)
             Simple CLI
           </h2>
           <p className="text-gray-500 mb-14 max-w-2xl">
-            Run migrations, roll back changes, and check status — all from one command with no configuration needed.
+            Run migrations, roll back changes, and check status — all from one command with no configuration needed.{" "}
+            <Link href="https://adelss04.github.io/Cosmigrator/getting-started/cli-commands" className="text-blue-600 hover:text-blue-700 font-medium inline-flex items-center gap-1">CLI reference <ArrowRight className="w-3.5 h-3.5" /></Link>
           </p>
 
           <div className="grid lg:grid-cols-2 gap-6">
@@ -411,7 +425,8 @@ $ dotnet run -- rollback --steps 3
           </h2>
           <p className="text-gray-500 mb-14 max-w-2xl">
             Run migrations as a Kubernetes init container, in a CI/CD pipeline,
-            or with a custom host — Cosmigrator fits your workflow.
+            or with a custom host — Cosmigrator fits your workflow.{" "}
+            <Link href="https://adelss04.github.io/Cosmigrator/integrations/ci-cd" className="text-blue-600 hover:text-blue-700 font-medium inline-flex items-center gap-1">Integration guides <ArrowRight className="w-3.5 h-3.5" /></Link>
           </p>
 
           <div className="grid lg:grid-cols-2 gap-6">
@@ -472,7 +487,8 @@ await MigrationHost.RunAsync(
           </h2>
           <p className="text-gray-500 mb-14 max-w-2xl">
             Every migration is recorded in a <code className="text-gray-700 bg-gray-100 px-1.5 py-0.5 rounded text-[0.9em]">__MigrationHistory</code> container.
-            Know exactly what ran, when, and its current status.
+            Know exactly what ran, when, and its current status.{" "}
+            <Link href="https://adelss04.github.io/Cosmigrator/core-concepts/history-tracking" className="text-blue-600 hover:text-blue-700 font-medium inline-flex items-center gap-1">History tracking docs <ArrowRight className="w-3.5 h-3.5" /></Link>
           </p>
 
           <div className="grid sm:grid-cols-3 gap-6">
@@ -547,7 +563,8 @@ await MigrationHost.RunAsync(
             Ecosystem
           </h2>
           <p className="text-gray-500 mb-14 max-w-2xl">
-            A single NuGet package with everything you need. No extra dependencies required.
+            A single NuGet package with everything you need. No extra dependencies required.{" "}
+            <Link href="https://adelss04.github.io/Cosmigrator/api-reference/migration-host" className="text-blue-600 hover:text-blue-700 font-medium inline-flex items-center gap-1">API reference <ArrowRight className="w-3.5 h-3.5" /></Link>
           </p>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -556,21 +573,25 @@ await MigrationHost.RunAsync(
                 name: "Cosmigrator",
                 desc: "Core library — migration runner, history tracking, bulk operations, and CLI.",
                 core: true,
+                docsUrl: "https://adelss04.github.io/Cosmigrator/getting-started/installation",
               },
               {
                 name: "IMigration",
                 desc: "The migration interface. Implement UpAsync and DownAsync for each schema change.",
                 core: false,
+                docsUrl: "https://adelss04.github.io/Cosmigrator/api-reference/imigration",
               },
               {
                 name: "BulkOperationHelper",
                 desc: "Read, transform, and upsert documents in batches with automatic retry on 429.",
                 core: false,
+                docsUrl: "https://adelss04.github.io/Cosmigrator/api-reference/bulk-operation-helper",
               },
               {
                 name: "MigrationHistory",
                 desc: "Tracks applied and rolled-back migrations in a dedicated Cosmos DB container.",
                 core: false,
+                docsUrl: "https://adelss04.github.io/Cosmigrator/api-reference/migration-history",
               },
             ].map((pkg) => (
               <div
@@ -587,17 +608,26 @@ await MigrationHost.RunAsync(
                 </div>
                 <div className="text-sm font-semibold text-gray-900 mb-1.5">{pkg.name}</div>
                 <p className="text-xs text-gray-500 leading-relaxed">{pkg.desc}</p>
-                {pkg.core && (
-                  <div className="mt-auto pt-3 flex items-center gap-1 text-xs text-gray-400 group-hover:text-blue-500 transition-colors">
+                <div className="mt-auto pt-3 flex items-center gap-3 text-xs">
+                  {pkg.core && (
                     <Link
                       href="https://www.nuget.org/packages/Cosmigrator"
                       target="_blank"
-                      className="flex items-center gap-1"
+                      className="flex items-center gap-1 text-gray-400 group-hover:text-blue-500 transition-colors"
                     >
                       NuGet <ExternalLink className="w-3 h-3" />
                     </Link>
-                  </div>
-                )}
+                  )}
+                  {pkg.docsUrl && (
+                    <Link
+                      href={pkg.docsUrl}
+                      target="_blank"
+                      className="flex items-center gap-1 text-gray-400 group-hover:text-blue-500 transition-colors"
+                    >
+                      Docs <BookOpen className="w-3 h-3" />
+                    </Link>
+                  )}
+                </div>
               </div>
             ))}
           </div>
@@ -611,7 +641,8 @@ await MigrationHost.RunAsync(
             Up and running in 3 steps
           </h2>
           <p className="text-gray-500 mb-14 max-w-2xl mx-auto text-center">
-            No complex setup. No boilerplate. Just migrations.
+            No complex setup. No boilerplate. Just migrations.{" "}
+            <Link href="https://adelss04.github.io/Cosmigrator/getting-started/quick-start" className="text-blue-600 hover:text-blue-700 font-medium inline-flex items-center gap-1">Full quick start guide <ArrowRight className="w-3.5 h-3.5" /></Link>
           </p>
 
           <div className="space-y-8">
