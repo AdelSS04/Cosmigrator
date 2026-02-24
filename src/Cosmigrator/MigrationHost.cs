@@ -112,14 +112,32 @@ public static class MigrationHost
         switch (command)
         {
             case "migrate":
-                await migrationRunner.RunPendingMigrationsAsync();
+                try
+                {
+                    await migrationRunner.RunPendingMigrationsAsync();
+                    Environment.Exit(0);
+                }
+                catch (Exception ex)
+                {
+                    logger.LogError(ex, "Migration failed");
+                    Environment.Exit(1);
+                }
                 break;
 
             case "rollback":
                 var steps = args.Contains("--steps")
                     ? int.Parse(args[Array.IndexOf(args, "--steps") + 1])
                     : 1;
-                await migrationRunner.RollbackAsync(steps);
+                try
+                {
+                    await migrationRunner.RollbackAsync(steps);
+                    Environment.Exit(0);
+                }
+                catch (Exception ex)
+                {
+                    logger.LogError(ex, "Rollback failed");
+                    Environment.Exit(1);
+                }
                 break;
 
             case "status":
